@@ -8,8 +8,8 @@ const fs = require('fs-extra')
 const folderRepoRelativePath = './repos/init'
 const folderRepoPath = path.resolve(__dirname, folderRepoRelativePath)
 
-const repoToClone = 'https://github.com/arslanarshad31/trello-react.git'
-const folderPaths = ['public', 'src/reducers'] // to be modified with the repo
+const repoToClone = 'https://github.com/akiran/react-slick'
+const folderPaths = ['src'] // to be modified with the repo
 const folderPathRegExp = new RegExp(folderPaths.join('|^'))
 const branchName = 'master'
 
@@ -23,23 +23,39 @@ beforeAll(() => {
 
 beforeEach(async done => {
   jest.setTimeout(10000)
-  const initCmd = `init ${folderRepoRelativePath} --repo ${repoToClone} --folder ${
-    folderPaths[0]
-  } --folder ${folderPaths[1]} --branch ${branchName}`
-  await parseArgsAndExecute(__dirname, initCmd.split(' '))
-  mainRepo = await Git.Repository.open(mainRepoPath)
-  folderRepo = await Git.Repository.open(folderRepoPath)
-  done()
+  let folders = ''
+  for (let a = 0; a < folderPaths.length; a++) {
+    folders = ' --folder ' + folderPaths[a] + ' '
+  }
+  const initCmd = `init ${folderRepoRelativePath} --repo ${repoToClone} ${folders} --branch ${branchName}`
+  try {
+    await parseArgsAndExecute(__dirname, initCmd.split(' '))
+    mainRepo = await Git.Repository.open(mainRepoPath)
+    folderRepo = await Git.Repository.open(folderRepoPath)
+    done()
+  } catch (err) {
+    console.log(err)
+    done(err)
+  }
 })
 
 afterEach(async done => {
-  await fs.remove(folderRepoPath)
-  done()
+  try {
+    await fs.remove(folderRepoPath)
+    done()
+  } catch (err) {
+    console.log(err)
+    done(err)
+  }
 })
 
 afterAll(async done => {
-  await fs.remove(mainRepoPath)
-  done()
+  try {
+    await fs.remove(mainRepoPath)
+  } catch (err) {
+    console.log(err)
+    done(err)
+  }
 })
 
 describe('Folder repo is forked correcly', () => {

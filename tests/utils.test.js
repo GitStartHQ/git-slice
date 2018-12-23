@@ -16,7 +16,7 @@ const {
   getLastGitSliceCommitHash
 } = require('../lib/utils')
 
-const folderPaths = ['public', 'src/reducers'] // to be modified with the repo
+const folderPaths = ['src'] // to be modified with the repo
 const folderPathRegExp = new RegExp(folderPaths.join('|^'))
 let folderRepo
 let mainRepo

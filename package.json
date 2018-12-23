@@ -3,6 +3,10 @@
   "version": "1.7.0",
   "description": "",
   "main": "lib/index.js",
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",

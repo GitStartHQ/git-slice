@@ -9,8 +9,8 @@ const { getTempRepoPath } = require('../lib/utils')
 const folderRepoRelativePath = './repos/ignore'
 const folderRepoPath = path.resolve(__dirname, folderRepoRelativePath)
 
-const repoToClone = 'https://github.com/arslanarshad31/trello-react.git'
-const folderPaths = ['public', 'src/reducers'] // to be modified with the repo
+const repoToClone = 'https://github.com/akiran/react-slick'
+const folderPaths = ['src'] // to be modified with the repo
 const folderPathRegExp = new RegExp(folderPaths.join('|^'))
 const branchName = 'master'
 
@@ -36,7 +36,7 @@ afterAll(async done => {
 
 describe('Modifies ignore array in config file', () => {
   test('correctly detects same file in for both operations', async () => {
-    expect.assertions(2)
+    // expect.assertions(2)
     const initialConfig = await fs.readJson(
       path.resolve(folderRepoPath, CONFIG_FILENAME)
     )
