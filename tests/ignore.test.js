@@ -9,7 +9,7 @@ const { getTempRepoPath } = require('../lib/utils')
 const folderRepoRelativePath = './repos/ignore'
 const folderRepoPath = path.resolve(__dirname, folderRepoRelativePath)
 
-const repoToClone = 'https://github.com/akiran/react-slick'
+const repoToClone = 'https://github.com/juliopiubello/tiny-repo'
 const folderPaths = ['src'] // to be modified with the repo
 const folderPathRegExp = new RegExp(folderPaths.join('|^'))
 const branchName = 'master'
@@ -29,8 +29,8 @@ beforeAll(async done => {
 })
 
 afterAll(async done => {
-  await fs.remove(folderRepoPath)
-  await fs.remove(mainRepoPath)
+  // await fs.remove(folderRepoPath)
+  // await fs.remove(mainRepoPath)
   done()
 })
 

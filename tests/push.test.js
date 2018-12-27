@@ -10,7 +10,7 @@ const fs = require('fs-extra')
 const folderRepoRelativePath = './repos/push'
 const folderRepoPath = path.resolve(__dirname, folderRepoRelativePath)
 
-const repoToClone = 'https://github.com/akiran/react-slick'
+const repoToClone = 'https://github.com/juliopiubello/tiny-repo'
 const folderPaths = ['src'] // to be modified with the repo
 const folderPathRegExp = new RegExp(folderPaths.join('|^'))
 const branchName = 'master'

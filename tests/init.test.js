@@ -8,7 +8,7 @@ const fs = require('fs-extra')
 const folderRepoRelativePath = './repos/init'
 const folderRepoPath = path.resolve(__dirname, folderRepoRelativePath)
 
-const repoToClone = 'https://github.com/akiran/react-slick'
+const repoToClone = 'https://github.com/juliopiubello/tiny-repo'
 const folderPaths = ['src'] // to be modified with the repo
 const folderPathRegExp = new RegExp(folderPaths.join('|^'))
 const branchName = 'master'
@@ -49,14 +49,14 @@ afterEach(async done => {
   }
 })
 
-afterAll(async done => {
-  try {
-    await fs.remove(mainRepoPath)
-  } catch (err) {
-    console.log(err)
-    done(err)
-  }
-})
+// afterAll(async done => {
+//   try {
+//     await fs.remove(mainRepoPath)
+//   } catch (err) {
+//     console.log(err)
+//     done(err)
+//   }
+// })
 
 describe('Folder repo is forked correcly', () => {
   test('all unignored files are copied - check by counting', async () => {
