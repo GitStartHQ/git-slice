@@ -19,10 +19,12 @@ let mainRepoPath
 
 beforeAll(async done => {
   jest.setTimeout(10000)
+  let folders = ''
+  for (let a = 0; a < folderPaths.length; a++) {
+    folders = ' --folder ' + folderPaths[a] + ' '
+  }
   mainRepoPath = getTempRepoPath(repoToClone)
-  const initCmd = `init ${folderRepoRelativePath} --repo ${repoToClone} --folder ${
-    folderPaths[0]
-  } --folder ${folderPaths[1]} --branch ${branchName}`
+  const initCmd = `init ${folderRepoRelativePath} --repo ${repoToClone} ${folders} --branch ${branchName}`
   await parseArgsAndExecute(__dirname, initCmd.split(' '))
   folderRepo = await Git.Repository.open(folderRepoPath)
   done()
