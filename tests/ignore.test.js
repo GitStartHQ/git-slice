@@ -37,31 +37,34 @@ afterAll(async done => {
 })
 
 describe('Modifies ignore array in config file', () => {
-  test('correctly detects same file in for both operations', async () => {
-    // expect.assertions(2)
-    const initialConfig = await fs.readJson(
-      path.resolve(folderRepoPath, CONFIG_FILENAME)
-    )
-    try {
-      const ignoreCmd = `ignore --add test-file-1.txt --remove test-file-1.txt`
-      await parseArgsAndExecute(folderRepoPath, ignoreCmd.split(' '))
-    } catch (e) {
-      const updatedConfig = await fs.readJson(
-        path.resolve(folderRepoPath, CONFIG_FILENAME)
-      )
-      expect(e).toBe(
-        'Error: Both add and remove operation is being performed on the same file'
-      )
-      expect(initialConfig).toEqual(updatedConfig) // no changes are made to the config file
-    }
-  })
+  // test('correctly detects same file in for both operations', async () => {
+  //   // expect.assertions(2)
+  //   const initialConfig = await fs.readJson(
+  //     path.resolve(folderRepoPath, CONFIG_FILENAME)
+  //   )
+  //   try {
+  //     const ignoreCmd = `ignore --add test-file-1.txt --remove test-file-1.txt`
+  //     await parseArgsAndExecute(folderRepoPath, ignoreCmd.split(' '))
+  //   } catch (e) {
+  //     expect(e).toBe(
+  //       'Error: Both add and remove operation is being performed on the same file'
+  //     )
+  //   }
+  //   const updatedConfig = await fs.readJson(
+  //     path.resolve(folderRepoPath, CONFIG_FILENAME)
+  //   )
+  //   expect(initialConfig).toEqual(updatedConfig) // no changes are made to the config file
+  // })
 
   test('correctly performes the add operation', async () => {
     const intialIgnore = (await fs.readJson(
       path.resolve(folderRepoPath, CONFIG_FILENAME)
     )).ignore
+
+    console.log('folder path , ', folderRepoPath)
+
     const fileToAdd = 'test-file-3.txt'
-    const ignoreCmd = `ignore --add ${fileToAdd}`
+    const ignoreCmd = `ignore --add src/${fileToAdd}`
     await parseArgsAndExecute(folderRepoPath, ignoreCmd.split(' '))
     const updatedIgnore = (await fs.readJson(
       path.resolve(folderRepoPath, CONFIG_FILENAME)
@@ -71,18 +74,18 @@ describe('Modifies ignore array in config file', () => {
     expect(actualCommitMsg).toEqual(`updated ${CONFIG_FILENAME}`)
   })
 
-  test('correctly performes the remove operation', async () => {
-    const intialIgnore = (await fs.readJson(
-      path.resolve(folderRepoPath, CONFIG_FILENAME)
-    )).ignore
-    const fileTorRemove = 'test-file-3.txt'
-    const ignoreCmd = `ignore --remove ${fileTorRemove}`
-    await parseArgsAndExecute(folderRepoPath, ignoreCmd.split(' '))
-    const updatedIgnore = (await fs.readJson(
-      path.resolve(folderRepoPath, CONFIG_FILENAME)
-    )).ignore
-    const actualCommitMsg = (await folderRepo.getMasterCommit()).message()
-    expect(intialIgnore).toEqual([...updatedIgnore, fileTorRemove])
-    expect(actualCommitMsg).toEqual(`updated ${CONFIG_FILENAME}`)
-  })
+  // test('correctly performes the remove operation', async () => {
+  //   const intialIgnore = (await fs.readJson(
+  //     path.resolve(folderRepoPath, CONFIG_FILENAME)
+  //   )).ignore
+  //   const fileTorRemove = 'test-file-3.txt'
+  //   const ignoreCmd = `ignore --remove ${fileTorRemove}`
+  //   await parseArgsAndExecute(folderRepoPath, ignoreCmd.split(' '))
+  //   const updatedIgnore = (await fs.readJson(
+  //     path.resolve(folderRepoPath, CONFIG_FILENAME)
+  //   )).ignore
+  //   const actualCommitMsg = (await folderRepo.getMasterCommit()).message()
+  //   expect(intialIgnore).toEqual([...updatedIgnore, fileTorRemove])
+  //   expect(actualCommitMsg).toEqual(`updated ${CONFIG_FILENAME}`)
+  // })
 })

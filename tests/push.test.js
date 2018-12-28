@@ -50,7 +50,7 @@ afterEach(async done => {
 })
 
 afterAll(async done => {
-  await fs.remove(mainRepoPath)
+  // await fs.remove(mainRepoPath)
   done()
 })
 
