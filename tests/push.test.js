@@ -7,12 +7,11 @@ const Git = require('nodegit')
 const path = require('path')
 const fs = require('fs-extra')
 
-const folderRepoRelativePath = './repos/push'
+const folderRepoRelativePath = './tmp/push'
 const folderRepoPath = path.resolve(__dirname, folderRepoRelativePath)
 
-const repoToClone = 'https://github.com/arslanarshad31/trello-react.git'
-const folderPaths = ['public', 'src/reducers'] // to be modified with the repo
-const folderPathRegExp = new RegExp(folderPaths.join('|^'))
+const repoToClone = 'https://github.com/murcul/git-slice.git'
+const folderPaths = ['bin', 'tests'] // to be modified with the repo
 const branchName = 'master'
 
 let mainRepoPath

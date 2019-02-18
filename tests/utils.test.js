@@ -3,8 +3,9 @@ const fs = require('fs-extra')
 const path = require('path')
 const parseArgsAndExecute = require('../lib')
 
-const mainRepoRelativePath = './repos/utils/main'
-const folderRepoRelativePath = './repos/utils/folder'
+// Path to the new temporary git repository
+const mainRepoRelativePath = './tmp/main'
+const folderRepoRelativePath = './tmp/main/folders'
 const mainRepoPath = path.resolve(__dirname, mainRepoRelativePath)
 const folderRepoPath = path.resolve(__dirname, folderRepoRelativePath)
 const {
@@ -16,20 +17,21 @@ const {
   getLastGitSliceCommitHash
 } = require('../lib/utils')
 
-const folderPaths = ['public', 'src/reducers'] // to be modified with the repo
-const folderPathRegExp = new RegExp(folderPaths.join('|^'))
+const folderPaths = ['main/folders/folder1', 'main/folders/folder2'] // to be modified with the repo
 let folderRepo
 let mainRepo
 const branchName = 'master'
 const COMMIT_MSG_PREFIX = 'git-slice:'
-const fileName = 'public/initial.txt'
+const filePath = 'main/folders/folder1/foo.txt'
+const filePath2 = 'main/folders/folder2/foo.txt'
 const fileContent = 'Hello World'
 
 beforeAll(async () => {
   mainRepo = await Git.Repository.init(mainRepoPath, 0)
-  await fs.outputFile(path.resolve(mainRepoPath, fileName), fileContent)
+  await fs.outputFile(path.resolve(mainRepoPath, filePath), fileContent)
+  await fs.outputFile(path.resolve(mainRepoPath, filePath2), fileContent)
   let index = await mainRepo.refreshIndex()
-  await index.addByPath(fileName)
+  await index.addByPath(filePath)
   await index.write()
   const oid = await index.writeTree()
   const signature = mainRepo.defaultSignature()
@@ -121,21 +123,21 @@ describe('getAllFiles', () => {
 
   it('should return the current files in the directory', async () => {
     allFiles = await getAllFiles(folderRepoPath)
-    expect(allFiles.length).toBe(16)
+    expect(allFiles.length).toBe(18)
   })
 
   it('should return all files in a directory', async () => {
     await fs.outputFile(test1Path, test1Text)
     await fs.outputFile(test2Path, test2Text)
     allFiles = await getAllFiles(folderRepoPath)
-    expect(allFiles.length).toBe(18)
+    expect(allFiles.length).toBe(20)
     expect(await fs.readFile(test1Path, 'utf8')).toBe('Test 1!')
     expect(await fs.readFile(test2Path, 'utf8')).toBe('Test 2!')
   })
 
   it('should return an empty array', async () => {
     await fs.remove(folderRepoPath)
-    const currentDir = path.resolve(__dirname, 'repos/utils/test')
+    const currentDir = path.resolve(__dirname, 'tmp/test')
     fs.ensureDirSync(currentDir)
     allFiles = await getAllFiles(currentDir)
     expect(allFiles).toEqual([])

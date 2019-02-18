@@ -10,11 +10,11 @@ const {
   getTempRepoPath
 } = require('../lib/utils')
 
-const folderRepoRelativePath = './repos/pull'
+const folderRepoRelativePath = './tmp/pull'
 const folderRepoPath = path.resolve(__dirname, folderRepoRelativePath)
 
-const repoToClone = 'https://github.com/arslanarshad31/trello-react.git'
-const folderPaths = ['public', 'src/reducers'] // to be modified with the repo
+const repoToClone = 'https://github.com/murcul/git-slice.git'
+const folderPaths = ['lib', 'bin'] // to be modified with the repo
 const folderPathRegExp = new RegExp(folderPaths.join('|^'))
 const branchName = 'master'
 
