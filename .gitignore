@@ -58,3 +58,6 @@ typings/
 
 # test repositories
 tests/tmp
+
+# typescript build
+dist
