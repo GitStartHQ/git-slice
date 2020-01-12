@@ -1,0 +1,36 @@
+on: push
+name: Check
+jobs:
+  yarnInstall:
+    name: yarn install
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@master
+      - name: yarn install
+        uses: docker://node:10.16.3
+        with:
+          entrypoint: yarn
+          args: install
+      - name: Prettier Check
+        uses: docker://node:10.16.3
+        with:
+          entrypoint: yarn
+          args: run prettier
+      - name: Check if updated types exist
+        uses: docker://node:10.16.3
+        with:
+          entrypoint: yarn
+          args: run codegen:clean && git status --porcelain --untracked-files=no
+
+      - name: Type Coverage
+        uses: docker://node:10.16.3
+        with:
+          entrypoint: yarn
+          args: run type-coverage
+      - name: Type Check
+        uses: docker://node:10.16.3
+        with:
+          entrypoint: yarn
+          args: run type-check
+

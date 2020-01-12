@@ -1,4 +1,4 @@
 FROM node:10
 COPY . .
-RUN npm install
+RUN yarn install
 ENTRYPOINT ["node", "./bin/cli.js"]

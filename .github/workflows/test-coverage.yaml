@@ -1,0 +1,24 @@
+on: push
+name: Check
+jobs:
+  testCoverage:
+    name: test and coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: yarn install
+      uses: docker://node:10.16.3
+      with:
+        entrypoint: yarn
+        args: install
+    - name: yarn test
+      uses: docker://node:10.16.3
+      with:
+        entrypoint: yarn
+        args: run test:coverage
+    - name: test coverage
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: ${{secrets.CODECOV_TOKEN}} #required
+        file: ./coverage-report/clover.xml #optional
+        flags: unittests #optional

@@ -7,11 +7,15 @@
     "build": "tsc --project tsconfig.json",
     "codegen":
       "apollo client:codegen --config=lib/graphql/engine/apollo.config.js --target=typescript --tagName=gql --outputFlat lib/graphql/engine/generated && yarn run prettier",
-    "test": "nyc mocha",
+    "codegen:clean": "rm -rf lib/graphql/engine/generated && yarn run codegen",
     "prettier":
       "prettier --single-quote --write --no-semi '{bin,lib,tests,__{tests,mocks}__}/**/*.js'",
-    "precommit": "lint-staged",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "type-check": "tsc --noEmit && tsc --noEmit --project tsconfig.json",
+    "type-coverage": "type-coverage",
+    "test": "nyc mocha",
+    "test:coverage":
+      "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "precommit": "lint-staged"
   },
   "author": "",
   "license": "MIT",
