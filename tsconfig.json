@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "inlineSources": true,
+    "pretty": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "module": "commonjs",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "target": "es2017",
+    "isolatedModules": false,
+    "noEmit": false
+  },
+  "exclude": ["node_modules", "dist", "test", "tests"],
+  "include": ["lib/**/*.ts", "bin/**/*.ts"]
+}

@@ -4,23 +4,25 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "codegen":
+      "apollo client:codegen --config=lib/graphql/engine/apollo.config.js --target=typescript --tagName=gql --outputFlat lib/graphql/engine/generated && yarn run prettier",
     "test": "nyc mocha",
-    "prettier": "prettier --single-quote --write --no-semi '{bin,lib,tests,__{tests,mocks}__}/**/*.js'",
+    "prettier":
+      "prettier --single-quote --write --no-semi '{bin,lib,tests,__{tests,mocks}__}/**/*.js'",
     "precommit": "lint-staged",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "",
   "license": "MIT",
   "bin": {
-    "git-slice": "./bin/cli.js"
+    "git-slice": "./dist/cli.js"
   },
   "lint-staged": {
-    "*.{js,json,css,md}": [
-      "yarn run prettier",
-      "git add"
-    ]
+    "*.{js,json,css,md}": ["yarn run prettier", "git add"]
   },
   "dependencies": {
+    "apollo": "^2.21.2",
     "apollo-boost": "^0.4.4",
     "axios": "^0.19.0",
     "cli-progress": "^1.8.0",
@@ -46,7 +48,11 @@
     "lint-staged": "^7.0.2",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
-    "prettier": "1.11.1"
+    "prettier": "1.11.1",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "type-coverage": "^2.3.0",
+    "typescript": "^3.7.3"
   },
   "engines": {
     "node": "~10.16.0"
